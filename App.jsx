@@ -1,381 +1,348 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2822
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
-{\colortbl;\red255\green255\blue255;\red183\green111\blue247;\red23\green24\blue24;\red202\green202\blue202;
-\red54\green192\blue160;\red212\green212\blue212;\red113\green192\blue131;\red109\green115\blue120;\red246\green124\blue48;
-\red238\green46\blue56;\red163\green79\blue131;}
-{\*\expandedcolortbl;;\cssrgb\c77255\c54118\c97647;\cssrgb\c11765\c12157\c12549;\cssrgb\c83137\c83137\c83137;
-\cssrgb\c23922\c78824\c69020;\cssrgb\c86275\c86275\c86275;\cssrgb\c50588\c78824\c58431;\cssrgb\c50196\c52549\c54510;\cssrgb\c98039\c56471\c24314;
-\cssrgb\c95686\c27843\c27843;\cssrgb\c70588\c40000\c58431;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\pardeftab720\partightenfactor0
+import React, { useState, useMemo, useEffect } from 'react';
+import { 
+  Target, Zap, DoorOpen, Users, UserSearch, Handshake, 
+  FileCheck, ArrowRight, Lightbulb, Calculator, Info, 
+  ChevronDown, AlertCircle, CheckCircle2, User, Calendar, 
+  TrendingUp, ClipboardPaste, FileDown, Loader2, X, Eye, Users2
+} from 'lucide-react';
 
-\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 import\cf4 \strokec4  \cf5 \strokec5 React\cf6 \strokec6 ,\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  useState\cf6 \strokec6 ,\cf4 \strokec4  useMemo\cf6 \strokec6 ,\cf4 \strokec4  useEffect \cf6 \strokec6 \}\cf4 \strokec4  \cf2 \strokec2 from\cf4 \strokec4  \cf7 \strokec7 'react'\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cf2 \cb3 \strokec2 import\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  \cb1 \
-\pard\pardeftab720\partightenfactor0
-\cf4 \cb3   \cf5 \strokec5 Target\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Zap\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 DoorOpen\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Users\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 UserSearch\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Handshake\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3   \cf5 \strokec5 FileCheck\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 ArrowRight\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Lightbulb\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Calculator\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Info\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3   \cf5 \strokec5 ChevronDown\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 AlertCircle\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 CheckCircle2\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 User\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Calendar\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3   \cf5 \strokec5 TrendingUp\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 ClipboardPaste\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 FileDown\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Loader2\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 X\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Eye\cf6 \strokec6 ,\cf4 \strokec4  \cf5 \strokec5 Users2\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 \}\cf4 \strokec4  \cf2 \strokec2 from\cf4 \strokec4  \cf7 \strokec7 'lucide-react'\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\
-\pard\pardeftab720\partightenfactor0
-\cf8 \cb3 \strokec8 // --- CONFIGURATION ET CONSTANTES ---\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf2 \cb3 \strokec2 const\cf4 \strokec4  \cf5 \strokec5 UI_CARD_STYLE\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  \cf7 \strokec7 "bg-white rounded-3xl p-6 shadow-sm border border-blue-50 transition-all hover:shadow-lg text-left"\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\
-\cf2 \cb3 \strokec2 const\cf4 \strokec4  \cf5 \strokec5 Dropdown\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 (\{\cf4 \strokec4  label\cf6 \strokec6 ,\cf4 \strokec4  options\cf6 \strokec6 ,\cf4 \strokec4  value\cf6 \strokec6 ,\cf4 \strokec4  onChange\cf6 \strokec6 ,\cf4 \strokec4  icon\cf6 \strokec6 :\cf4 \strokec4  \cf5 \strokec5 Icon\cf4 \strokec4  \cf6 \strokec6 \})\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf4 \cb3   \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex-1 min-w-[200px] text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 <\cf4 \strokec4 label className\cf6 \strokec6 =\cf7 \strokec7 "text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 \{\cf5 \strokec5 Icon\cf4 \strokec4  \cf6 \strokec6 &&\cf4 \strokec4  \cf6 \strokec6 <\cf5 \strokec5 Icon\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 12\cf6 \strokec6 \}\cf4 \strokec4  />\cf6 \strokec6 \}\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4 label\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 </\cf4 \strokec4 label\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "relative text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 <\cf4 \strokec4 select \cb1 \
-\cb3         value\cf6 \strokec6 =\{\cf4 \strokec4 value\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3         onChange\cf6 \strokec6 =\{(\cf4 \strokec4 e\cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  onChange\cf6 \strokec6 (\cf4 \strokec4 e\cf6 \strokec6 .\cf4 \strokec4 target\cf6 \strokec6 .\cf4 \strokec4 value\cf6 \strokec6 )\}\cf4 \cb1 \strokec4 \
-\cb3         className\cf6 \strokec6 =\cf7 \strokec7 "w-full appearance-none bg-white border border-slate-200 rounded-xl px-4 py-3 pr-10 font-bold text-slate-700 shadow-sm focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer transition-all hover:border-indigo-300 text-sm"\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 option value\cf6 \strokec6 =\cf7 \strokec7 ""\cf6 \strokec6 >\cf5 \strokec5 S\cf10 \strokec10 \'e9\cf4 \strokec4 lectionner\cf6 \strokec6 ...</\cf4 \strokec4 option\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 \{\cf4 \strokec4 options\cf6 \strokec6 .\cf4 \strokec4 map\cf6 \strokec6 (\cf4 \strokec4 opt \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 option key\cf6 \strokec6 =\{\cf5 \strokec5 String\cf6 \strokec6 (\cf4 \strokec4 opt\cf6 \strokec6 )\}\cf4 \strokec4  value\cf6 \strokec6 =\{\cf5 \strokec5 String\cf6 \strokec6 (\cf4 \strokec4 opt\cf6 \strokec6 )\}>\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 \{\cf5 \strokec5 String\cf6 \strokec6 (\cf4 \strokec4 opt\cf6 \strokec6 )\}\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 </\cf4 \strokec4 option\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 ))\}\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 </\cf4 \strokec4 select\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 <\cf5 \strokec5 ChevronDown\cf4 \strokec4  className\cf6 \strokec6 =\cf7 \strokec7 "absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 16\cf6 \strokec6 \}\cf4 \strokec4  />\cb1 \
-\cb3     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3   \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 );\cf4 \cb1 \strokec4 \
-\
-\pard\pardeftab720\partightenfactor0
-\cf2 \cb3 \strokec2 const\cf4 \strokec4  \cf5 \strokec5 RoadmapStep\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 (\{\cf4 \strokec4  label\cf6 \strokec6 ,\cf4 \strokec4  current\cf6 \strokec6 ,\cf4 \strokec4  required\cf6 \strokec6 ,\cf4 \strokec4  icon\cf6 \strokec6 :\cf4 \strokec4  \cf5 \strokec5 Icon\cf6 \strokec6 ,\cf4 \strokec4  ratioLabel\cf6 \strokec6 ,\cf4 \strokec4  ratioValue\cf6 \strokec6 ,\cf4 \strokec4  targetValue\cf6 \strokec6 ,\cf4 \strokec4  isMax \cf6 \strokec6 =\cf4 \strokec4  \cf2 \strokec2 true\cf6 \strokec6 ,\cf4 \strokec4  hideRatio \cf6 \strokec6 =\cf4 \strokec4  \cf2 \strokec2 false\cf4 \strokec4  \cf6 \strokec6 \})\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf4 \cb3   \cf2 \strokec2 const\cf4 \strokec4  isMet \cf6 \strokec6 =\cf4 \strokec4  parseFloat\cf6 \strokec6 (\cf4 \strokec4 current\cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 >=\cf4 \strokec4  parseFloat\cf6 \strokec6 (\cf4 \strokec4 required\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  progress \cf6 \strokec6 =\cf4 \strokec4  \cf5 \strokec5 Math\cf6 \strokec6 .\cf4 \strokec4 min\cf6 \strokec6 ((\cf4 \strokec4 parseFloat\cf6 \strokec6 (\cf4 \strokec4 current\cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 /\cf4 \strokec4  parseFloat\cf6 \strokec6 (\cf4 \strokec4 required\cf6 \strokec6 ))\cf4 \strokec4  \cf6 \strokec6 *\cf4 \strokec4  \cf9 \strokec9 100\cf6 \strokec6 ,\cf4 \strokec4  \cf9 \strokec9 100\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  isRatioTargetMet \cf6 \strokec6 =\cf4 \strokec4  isMax \cf6 \strokec6 ?\cf4 \strokec4  ratioValue \cf6 \strokec6 <=\cf4 \strokec4  targetValue \cf6 \strokec6 :\cf4 \strokec4  ratioValue \cf6 \strokec6 >=\cf4 \strokec4  targetValue\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  ratioColorClass \cf6 \strokec6 =\cf4 \strokec4  isRatioTargetMet \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 'text-emerald-600 bg-emerald-50 border-emerald-100'\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'text-rose-600 bg-rose-50 border-rose-100'\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\
-\cb3   \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "bg-white p-5 rounded-[2rem] border border-slate-100 shadow-md relative overflow-hidden flex flex-col h-full text-left transition-all hover:shadow-lg"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-start justify-between mb-3 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\{\cf7 \strokec7 `p-2.5 rounded-xl \cf6 \strokec6 $\{\cf4 \strokec4 isMet \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 'bg-emerald-50 text-emerald-600'\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'bg-indigo-50 text-indigo-600'\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 \}>\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 \{\cf5 \strokec5 Icon\cf4 \strokec4  \cf6 \strokec6 &&\cf4 \strokec4  \cf6 \strokec6 <\cf5 \strokec5 Icon\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 22\cf6 \strokec6 \}\cf4 \strokec4  />\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "text-right flex flex-col items-end"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "text-[9px] font-bold text-slate-400 leading-tight mb-1 max-w-[140px] text-right"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf7 \strokec7 "\{label\}"\cf4 \strokec4  \cf10 \strokec10 \'e0\cf4 \strokec4  r\cf10 \strokec10 \'e9\cf4 \strokec4 aliser pour arriver \cf10 \strokec10 \'e0\cf4 \strokec4  l\cf7 \strokec7 'objectif :\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 </\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "text-2xl font-black text-slate-900 leading-none"\cf6 \strokec6 >\{\cf4 \strokec4 required\cf6 \strokec6 \}</\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex-1 space-y-3 mb-4 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-center gap-2 text-[10px]"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 span className\cf6 \strokec6 =\cf7 \strokec7 "font-bold text-slate-400 italic"\cf6 \strokec6 >\cf5 \strokec5 Actuel\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4 current\cf6 \strokec6 .\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 )\}</\cf4 \strokec4 span\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 \{!\cf4 \strokec4 isMet \cf6 \strokec6 &&\cf4 \strokec4  \cf6 \strokec6 <\cf5 \strokec5 ArrowRight\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 10\cf6 \strokec6 \}\cf4 \strokec4  className\cf6 \strokec6 =\cf7 \strokec7 "text-slate-300"\cf4 \strokec4  />\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 span className\cf6 \strokec6 =\{\cf7 \strokec7 `font-black \cf6 \strokec6 $\{\cf4 \strokec4 isMet \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 'text-emerald-600'\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'text-amber-600'\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 \}>\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 \{\cf4 \strokec4 isMet \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 'Cible atteinte'\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 `Besoin: +\cf6 \strokec6 $\{(\cf4 \strokec4 required \cf6 \strokec6 -\cf4 \strokec4  current\cf6 \strokec6 ).\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 )\}\cf7 \strokec7 `\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 </\cf4 \strokec4 span\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 \{!\cf4 \strokec4 hideRatio \cf6 \strokec6 &&\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\{\cf7 \strokec7 `px-3 py-2 rounded-xl border transition-colors \cf6 \strokec6 $\{\cf4 \strokec4 ratioColorClass\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 \}>\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex justify-between items-center mb-0.5"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "text-[8px] font-black uppercase tracking-widest opacity-70"\cf6 \strokec6 >\{\cf4 \strokec4 ratioLabel\cf6 \strokec6 \}</\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "text-[8px] font-bold uppercase whitespace-nowrap ml-2 text-right"\cf6 \strokec6 >\cf5 \strokec5 Cible\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4 isMax \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 '\uc0\u8804 '\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 '\uc0\u8805 '\cf6 \strokec6 \}\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4 targetValue\cf6 \strokec6 \}</\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "text-sm font-black flex items-center gap-1.5 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 \{\cf4 \strokec4 ratioValue\cf6 \strokec6 .\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 2\cf6 \strokec6 )\}\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 \{\cf4 \strokec4 isRatioTargetMet \cf6 \strokec6 ?\cf4 \strokec4  \cf6 \strokec6 <\cf5 \strokec5 CheckCircle2\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 12\cf6 \strokec6 \}\cf4 \strokec4  /> \cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 <\cf5 \strokec5 AlertCircle\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 12\cf6 \strokec6 \}\cf4 \strokec4  />\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 </\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 )\}\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "h-1.5 w-full bg-slate-100 rounded-full overflow-hidden text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 div \cb1 \
-\cb3           className\cf6 \strokec6 =\{\cf7 \strokec7 `h-full transition-all duration-1000 \cf6 \strokec6 $\{\cf4 \strokec4 isMet \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 'bg-emerald-500'\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'bg-indigo-600'\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3           style\cf6 \strokec6 =\{\{\cf4 \strokec4  width\cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 `\cf6 \strokec6 $\{\cf4 \strokec4 progress\cf6 \strokec6 \}\cf7 \strokec7 %`\cf4 \strokec4  \cf6 \strokec6 \}\}\cf4 \cb1 \strokec4 \
-\cb3         />\cb1 \
-\cb3       \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3   \cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 \};\cf4 \cb1 \strokec4 \
-\
-\pard\pardeftab720\partightenfactor0
-\cf2 \cb3 \strokec2 const\cf4 \strokec4  \cf5 \strokec5 LeverBlock\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 (\{\cf4 \strokec4  title\cf6 \strokec6 ,\cf4 \strokec4  ratioName\cf6 \strokec6 ,\cf4 \strokec4  value\cf6 \strokec6 ,\cf4 \strokec4  target\cf6 \strokec6 ,\cf4 \strokec4  isMax \cf6 \strokec6 =\cf4 \strokec4  \cf2 \strokec2 true\cf6 \strokec6 ,\cf4 \strokec4  analysis\cf6 \strokec6 ,\cf4 \strokec4  hideRatioDetails \cf6 \strokec6 =\cf4 \strokec4  \cf2 \strokec2 false\cf4 \strokec4  \cf6 \strokec6 \})\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf4 \cb3   \cf2 \strokec2 const\cf4 \strokec4  isMet \cf6 \strokec6 =\cf4 \strokec4  isMax \cf6 \strokec6 ?\cf4 \strokec4  value \cf6 \strokec6 <=\cf4 \strokec4  target \cf6 \strokec6 :\cf4 \strokec4  value \cf6 \strokec6 >=\cf4 \strokec4  target\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  colorClass \cf6 \strokec6 =\cf4 \strokec4  isMet \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 'emerald'\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'rose'\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\{\cf7 \strokec7 `p-4 bg-\cf6 \strokec6 $\{\cf4 \strokec4 colorClass\cf6 \strokec6 \}\cf7 \strokec7 -50/30 rounded-3xl border border-\cf6 \strokec6 $\{\cf4 \strokec4 colorClass\cf6 \strokec6 \}\cf7 \strokec7 -100 flex items-start gap-3 transition-all hover:bg-white hover:border-\cf6 \strokec6 $\{\cf4 \strokec4 colorClass\cf6 \strokec6 \}\cf7 \strokec7 -300 text-left`\cf6 \strokec6 \}>\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\{\cf7 \strokec7 `shrink-0 p-2 bg-white rounded-xl shadow-sm text-\cf6 \strokec6 $\{\cf4 \strokec4 colorClass\cf6 \strokec6 \}\cf7 \strokec7 -500 text-left`\cf6 \strokec6 \}>\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 \{\cf4 \strokec4 isMet \cf6 \strokec6 ?\cf4 \strokec4  \cf6 \strokec6 <\cf5 \strokec5 CheckCircle2\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 18\cf6 \strokec6 \}\cf4 \strokec4 /> \cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 <\cf5 \strokec5 AlertCircle\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 18\cf6 \strokec6 \}\cf4 \strokec4 />\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "text-left flex-1 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-center justify-between mb-1 text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\{\cf7 \strokec7 `text-[10px] font-black uppercase tracking-widest text-\cf6 \strokec6 $\{\cf4 \strokec4 colorClass\cf6 \strokec6 \}\cf7 \strokec7 -600`\cf6 \strokec6 \}>\{\cf4 \strokec4 title\cf6 \strokec6 \}</\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 \{!\cf4 \strokec4 hideRatioDetails \cf6 \strokec6 &&\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 <\cf4 \strokec4 span className\cf6 \strokec6 =\{\cf7 \strokec7 `text-[9px] font-bold px-2 py-0.5 rounded-full bg-\cf6 \strokec6 $\{\cf4 \strokec4 colorClass\cf6 \strokec6 \}\cf7 \strokec7 -100 text-\cf6 \strokec6 $\{\cf4 \strokec4 colorClass\cf6 \strokec6 \}\cf7 \strokec7 -700 text-right`\cf6 \strokec6 \}>\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 \{\cf4 \strokec4 ratioName\cf6 \strokec6 \}\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4 value\cf6 \strokec6 .\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 2\cf6 \strokec6 )\}\cf4 \strokec4  \cf6 \strokec6 (\cf5 \strokec5 Cible\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4 isMax \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 '\uc0\u8804 '\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 '\uc0\u8805 '\cf6 \strokec6 \}\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4 target\cf6 \strokec6 \})\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 </\cf4 \strokec4 span\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 )\}\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "text-[11px] font-bold text-slate-700 leading-snug italic whitespace-pre-wrap text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 \{\cf4 \strokec4 analysis\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3   \cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 \};\cf4 \cb1 \strokec4 \
-\
-\pard\pardeftab720\partightenfactor0
-\cf2 \cb3 \strokec2 const\cf4 \strokec4  \cf5 \strokec5 StatMinimal\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 (\{\cf4 \strokec4  label\cf6 \strokec6 ,\cf4 \strokec4  value\cf6 \strokec6 ,\cf4 \strokec4  highlight \cf6 \strokec6 \})\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf4 \cb3   \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\{\cf7 \strokec7 `p-4 rounded-2xl border \cf6 \strokec6 $\{\cf4 \strokec4 highlight \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 'bg-indigo-600 border-indigo-700 shadow-md text-left'\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'bg-slate-50 border-slate-100 text-left'\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 \}>\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\{\cf7 \strokec7 `text-[8px] font-black uppercase tracking-widest mb-1 \cf6 \strokec6 $\{\cf4 \strokec4 highlight \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 'text-indigo-200'\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'text-slate-400'\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 \}>\{\cf4 \strokec4 label\cf6 \strokec6 \}</\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\{\cf7 \strokec7 `text-lg font-black \cf6 \strokec6 $\{\cf4 \strokec4 highlight \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 'text-white italic'\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'text-slate-700'\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 \}>\{\cf4 \strokec4 value\cf6 \strokec6 \}</\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3   \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 );\cf4 \cb1 \strokec4 \
-\
-\pard\pardeftab720\partightenfactor0
-\cf2 \cb3 \strokec2 const\cf4 \strokec4  parsePastedData \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 (\cf4 \strokec4 text\cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf4 \cb3   \cf2 \strokec2 if\cf4 \strokec4  \cf6 \strokec6 (!\cf4 \strokec4 text \cf6 \strokec6 ||\cf4 \strokec4  text\cf6 \strokec6 .\cf4 \strokec4 trim\cf6 \strokec6 ().\cf4 \strokec4 length \cf6 \strokec6 <\cf4 \strokec4  \cf9 \strokec9 10\cf6 \strokec6 )\cf4 \strokec4  \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  collabs\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 [],\cf4 \strokec4  weeks\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 [],\cf4 \strokec4  data\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\}\cf4 \strokec4  \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  lines \cf6 \strokec6 =\cf4 \strokec4  text\cf6 \strokec6 .\cf4 \strokec4 split\cf6 \strokec6 (\cf7 \strokec7 '\\n'\cf6 \strokec6 ).\cf4 \strokec4 filter\cf6 \strokec6 (\cf4 \strokec4 l \cf6 \strokec6 =>\cf4 \strokec4  l\cf6 \strokec6 .\cf4 \strokec4 trim\cf6 \strokec6 ()\cf4 \strokec4  \cf6 \strokec6 !==\cf4 \strokec4  \cf7 \strokec7 ''\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 if\cf4 \strokec4  \cf6 \strokec6 (\cf4 \strokec4 lines\cf6 \strokec6 .\cf4 \strokec4 length \cf6 \strokec6 <\cf4 \strokec4  \cf9 \strokec9 2\cf6 \strokec6 )\cf4 \strokec4  \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  collabs\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 [],\cf4 \strokec4  weeks\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 [],\cf4 \strokec4  data\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\}\cf4 \strokec4  \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  headers \cf6 \strokec6 =\cf4 \strokec4  lines\cf6 \strokec6 [\cf9 \strokec9 0\cf6 \strokec6 ].\cf4 \strokec4 split\cf6 \strokec6 (\cf11 \strokec11 /[|\\t]/\cf6 \strokec6 ).\cf4 \strokec4 map\cf6 \strokec6 (\cf4 \strokec4 h \cf6 \strokec6 =>\cf4 \strokec4  h\cf6 \strokec6 .\cf4 \strokec4 trim\cf6 \strokec6 ().\cf4 \strokec4 toLowerCase\cf6 \strokec6 ());\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  findIdx \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 (\cf4 \strokec4 keys\cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  headers\cf6 \strokec6 .\cf4 \strokec4 findIndex\cf6 \strokec6 (\cf4 \strokec4 h \cf6 \strokec6 =>\cf4 \strokec4  keys\cf6 \strokec6 .\cf4 \strokec4 some\cf6 \strokec6 (\cf4 \strokec4 k \cf6 \strokec6 =>\cf4 \strokec4  h\cf6 \strokec6 .\cf4 \strokec4 includes\cf6 \strokec6 (\cf4 \strokec4 k\cf6 \strokec6 )));\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  idx \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  name\cf6 \strokec6 :\cf4 \strokec4  findIdx\cf6 \strokec6 ([\cf7 \strokec7 "nom"\cf6 \strokec6 ]),\cf4 \strokec4  week\cf6 \strokec6 :\cf4 \strokec4  findIdx\cf6 \strokec6 ([\cf7 \strokec7 "semaine"\cf6 \strokec6 ]),\cf4 \strokec4  portes\cf6 \strokec6 :\cf4 \strokec4  findIdx\cf6 \strokec6 ([\cf7 \strokec7 "portes"\cf6 \strokec6 ]),\cf4 \strokec4  presents\cf6 \strokec6 :\cf4 \strokec4  findIdx\cf6 \strokec6 ([\cf7 \strokec7 "pr\'e9sents"\cf6 \strokec6 ,\cf4 \strokec4  \cf7 \strokec7 "presents"\cf6 \strokec6 ]),\cf4 \strokec4  prospects\cf6 \strokec6 :\cf4 \strokec4  findIdx\cf6 \strokec6 ([\cf7 \strokec7 "prospects"\cf6 \strokec6 ]),\cf4 \strokec4  closings\cf6 \strokec6 :\cf4 \strokec4  findIdx\cf6 \strokec6 ([\cf7 \strokec7 "closings"\cf6 \strokec6 ]),\cf4 \strokec4  bc\cf6 \strokec6 :\cf4 \strokec4  findIdx\cf6 \strokec6 ([\cf7 \strokec7 "bc"\cf6 \strokec6 ])\cf4 \strokec4  \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\cb3   \cb1 \
-\cb3   \cf2 \strokec2 if\cf4 \strokec4  \cf6 \strokec6 (\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 name \cf6 \strokec6 ===\cf4 \strokec4  \cf6 \strokec6 -\cf9 \strokec9 1\cf6 \strokec6 )\cf4 \strokec4  \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  collabs\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 [],\cf4 \strokec4  weeks\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 [],\cf4 \strokec4  data\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\}\cf4 \strokec4  \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\cb3   \cb1 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  db \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 \{\};\cf4 \strokec4  \cf2 \strokec2 const\cf4 \strokec4  allCollabs \cf6 \strokec6 =\cf4 \strokec4  \cf2 \strokec2 new\cf4 \strokec4  \cf5 \strokec5 Set\cf6 \strokec6 ();\cf4 \strokec4  \cf2 \strokec2 const\cf4 \strokec4  allWeeks \cf6 \strokec6 =\cf4 \strokec4  \cf2 \strokec2 new\cf4 \strokec4  \cf5 \strokec5 Set\cf6 \strokec6 ();\cf4 \cb1 \strokec4 \
-\cb3   lines\cf6 \strokec6 .\cf4 \strokec4 slice\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 ).\cf4 \strokec4 forEach\cf6 \strokec6 (\cf4 \strokec4 line \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  p \cf6 \strokec6 =\cf4 \strokec4  line\cf6 \strokec6 .\cf4 \strokec4 split\cf6 \strokec6 (\cf11 \strokec11 /[|\\t]/\cf6 \strokec6 ).\cf4 \strokec4 map\cf6 \strokec6 (\cf4 \strokec4 v \cf6 \strokec6 =>\cf4 \strokec4  v\cf6 \strokec6 .\cf4 \strokec4 trim\cf6 \strokec6 ());\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 if\cf4 \strokec4  \cf6 \strokec6 (!\cf4 \strokec4 p\cf6 \strokec6 [\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 name\cf6 \strokec6 ])\cf4 \strokec4  \cf2 \strokec2 return\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  name \cf6 \strokec6 =\cf4 \strokec4  \cf5 \strokec5 String\cf6 \strokec6 (\cf4 \strokec4 p\cf6 \strokec6 [\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 name\cf6 \strokec6 ]);\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  weekValue \cf6 \strokec6 =\cf4 \strokec4  p\cf6 \strokec6 [\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 week\cf6 \strokec6 ]\cf4 \strokec4  \cf6 \strokec6 ?\cf4 \strokec4  p\cf6 \strokec6 [\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 week\cf6 \strokec6 ].\cf4 \strokec4 replace\cf6 \strokec6 (\cf11 \strokec11 /[^0-9]/\cf2 \strokec2 g\cf6 \strokec6 ,\cf4 \strokec4  \cf7 \strokec7 ''\cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 "1"\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  weekLabel \cf6 \strokec6 =\cf4 \strokec4  \cf7 \strokec7 `Semaine \cf6 \strokec6 $\{\cf4 \strokec4 weekValue\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     allCollabs\cf6 \strokec6 .\cf4 \strokec4 add\cf6 \strokec6 (\cf4 \strokec4 name\cf6 \strokec6 );\cf4 \strokec4  allWeeks\cf6 \strokec6 .\cf4 \strokec4 add\cf6 \strokec6 (\cf4 \strokec4 weekLabel\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  key \cf6 \strokec6 =\cf4 \strokec4  \cf7 \strokec7 `\cf6 \strokec6 $\{\cf4 \strokec4 name\cf6 \strokec6 \}\cf7 \strokec7 _\cf6 \strokec6 $\{\cf4 \strokec4 weekLabel\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 if\cf4 \strokec4  \cf6 \strokec6 (!\cf4 \strokec4 db\cf6 \strokec6 [\cf4 \strokec4 key\cf6 \strokec6 ])\cf4 \strokec4  db\cf6 \strokec6 [\cf4 \strokec4 key\cf6 \strokec6 ]\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  count\cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ,\cf4 \strokec4  portes\cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ,\cf4 \strokec4  presents\cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ,\cf4 \strokec4  prospects\cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ,\cf4 \strokec4  closings\cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ,\cf4 \strokec4  bc\cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 0\cf4 \strokec4  \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\cb3     db\cf6 \strokec6 [\cf4 \strokec4 key\cf6 \strokec6 ].\cf4 \strokec4 count \cf6 \strokec6 +=\cf4 \strokec4  \cf9 \strokec9 1\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     db\cf6 \strokec6 [\cf4 \strokec4 key\cf6 \strokec6 ].\cf4 \strokec4 portes \cf6 \strokec6 +=\cf4 \strokec4  parseInt\cf6 \strokec6 (\cf4 \strokec4 p\cf6 \strokec6 [\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 portes\cf6 \strokec6 ])\cf4 \strokec4  \cf6 \strokec6 ||\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     db\cf6 \strokec6 [\cf4 \strokec4 key\cf6 \strokec6 ].\cf4 \strokec4 presents \cf6 \strokec6 +=\cf4 \strokec4  parseInt\cf6 \strokec6 (\cf4 \strokec4 p\cf6 \strokec6 [\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 presents\cf6 \strokec6 ])\cf4 \strokec4  \cf6 \strokec6 ||\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     db\cf6 \strokec6 [\cf4 \strokec4 key\cf6 \strokec6 ].\cf4 \strokec4 prospects \cf6 \strokec6 +=\cf4 \strokec4  parseInt\cf6 \strokec6 (\cf4 \strokec4 p\cf6 \strokec6 [\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 prospects\cf6 \strokec6 ])\cf4 \strokec4  \cf6 \strokec6 ||\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     db\cf6 \strokec6 [\cf4 \strokec4 key\cf6 \strokec6 ].\cf4 \strokec4 closings \cf6 \strokec6 +=\cf4 \strokec4  parseInt\cf6 \strokec6 (\cf4 \strokec4 p\cf6 \strokec6 [\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 closings\cf6 \strokec6 ])\cf4 \strokec4  \cf6 \strokec6 ||\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     db\cf6 \strokec6 [\cf4 \strokec4 key\cf6 \strokec6 ].\cf4 \strokec4 bc \cf6 \strokec6 +=\cf4 \strokec4  parseInt\cf6 \strokec6 (\cf4 \strokec4 p\cf6 \strokec6 [\cf4 \strokec4 idx\cf6 \strokec6 .\cf4 \strokec4 bc\cf6 \strokec6 ])\cf4 \strokec4  \cf6 \strokec6 ||\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3   \cf6 \strokec6 \});\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  collabs\cf6 \strokec6 :\cf4 \strokec4  \cf5 \strokec5 Array\cf6 \strokec6 .\cf2 \strokec2 from\cf6 \strokec6 (\cf4 \strokec4 allCollabs\cf6 \strokec6 ).\cf4 \strokec4 sort\cf6 \strokec6 (),\cf4 \strokec4  weeks\cf6 \strokec6 :\cf4 \strokec4  \cf5 \strokec5 Array\cf6 \strokec6 .\cf2 \strokec2 from\cf6 \strokec6 (\cf4 \strokec4 allWeeks\cf6 \strokec6 ).\cf4 \strokec4 sort\cf6 \strokec6 ((\cf4 \strokec4 a\cf6 \strokec6 ,\cf4 \strokec4 b\cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 (\cf4 \strokec4 parseInt\cf6 \strokec6 (\cf4 \strokec4 a\cf6 \strokec6 .\cf4 \strokec4 replace\cf6 \strokec6 (\cf11 \strokec11 /\\D/\cf2 \strokec2 g\cf6 \strokec6 ,\cf7 \strokec7 ''\cf6 \strokec6 ))\cf4 \strokec4  \cf6 \strokec6 ||\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 -\cf4 \strokec4  \cf6 \strokec6 (\cf4 \strokec4 parseInt\cf6 \strokec6 (\cf4 \strokec4 b\cf6 \strokec6 .\cf4 \strokec4 replace\cf6 \strokec6 (\cf11 \strokec11 /\\D/\cf2 \strokec2 g\cf6 \strokec6 ,\cf7 \strokec7 ''\cf6 \strokec6 ))\cf4 \strokec4  \cf6 \strokec6 ||\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 )),\cf4 \strokec4  data\cf6 \strokec6 :\cf4 \strokec4  db \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 \};\cf4 \cb1 \strokec4 \
-\
-\pard\pardeftab720\partightenfactor0
-\cf2 \cb3 \strokec2 export\cf4 \strokec4  \cf2 \strokec2 default\cf4 \strokec4  \cf2 \strokec2 function\cf4 \strokec4  \cf5 \strokec5 App\cf6 \strokec6 ()\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf4 \cb3   \cf2 \strokec2 const\cf4 \strokec4  \cf6 \strokec6 [\cf4 \strokec4 rawData\cf6 \strokec6 ,\cf4 \strokec4  setRawData\cf6 \strokec6 ]\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  useState\cf6 \strokec6 (\cf7 \strokec7 ''\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  \cf6 \strokec6 [\cf4 \strokec4 selectedCollab\cf6 \strokec6 ,\cf4 \strokec4  setSelectedCollab\cf6 \strokec6 ]\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  useState\cf6 \strokec6 (\cf7 \strokec7 ''\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  \cf6 \strokec6 [\cf4 \strokec4 selectedWeek\cf6 \strokec6 ,\cf4 \strokec4  setSelectedWeek\cf6 \strokec6 ]\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  useState\cf6 \strokec6 (\cf7 \strokec7 ''\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  \cf6 \strokec6 [\cf4 \strokec4 isExporting\cf6 \strokec6 ,\cf4 \strokec4  setIsExporting\cf6 \strokec6 ]\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  useState\cf6 \strokec6 (\cf2 \strokec2 false\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  targetBC \cf6 \strokec6 =\cf4 \strokec4  \cf9 \strokec9 12\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\
-\cb3   useEffect\cf6 \strokec6 (()\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  script \cf6 \strokec6 =\cf4 \strokec4  document\cf6 \strokec6 .\cf4 \strokec4 createElement\cf6 \strokec6 (\cf7 \strokec7 'script'\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3     script\cf6 \strokec6 .\cf4 \strokec4 src \cf6 \strokec6 =\cf4 \strokec4  \cf7 \strokec7 "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     script\cf6 \strokec6 .\cf2 \strokec2 async\cf4 \strokec4  \cf6 \strokec6 =\cf4 \strokec4  \cf2 \strokec2 true\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     document\cf6 \strokec6 .\cf4 \strokec4 body\cf6 \strokec6 .\cf4 \strokec4 appendChild\cf6 \strokec6 (\cf4 \strokec4 script\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3   \cf6 \strokec6 \},\cf4 \strokec4  \cf6 \strokec6 []);\cf4 \cb1 \strokec4 \
-\
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  parsed \cf6 \strokec6 =\cf4 \strokec4  useMemo\cf6 \strokec6 (()\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  parsePastedData\cf6 \strokec6 (\cf4 \strokec4 rawData\cf6 \strokec6 ),\cf4 \strokec4  \cf6 \strokec6 [\cf4 \strokec4 rawData\cf6 \strokec6 ]);\cf4 \cb1 \strokec4 \
-\
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  currentStats \cf6 \strokec6 =\cf4 \strokec4  useMemo\cf6 \strokec6 (()\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 if\cf4 \strokec4  \cf6 \strokec6 (!\cf4 \strokec4 selectedCollab \cf6 \strokec6 ||\cf4 \strokec4  \cf6 \strokec6 !\cf4 \strokec4 selectedWeek\cf6 \strokec6 )\cf4 \strokec4  \cf2 \strokec2 return\cf4 \strokec4  \cf2 \strokec2 null\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  stats \cf6 \strokec6 =\cf4 \strokec4  parsed\cf6 \strokec6 .\cf4 \strokec4 data\cf6 \strokec6 [\cf7 \strokec7 `\cf6 \strokec6 $\{\cf4 \strokec4 selectedCollab\cf6 \strokec6 \}\cf7 \strokec7 _\cf6 \strokec6 $\{\cf4 \strokec4 selectedWeek\cf6 \strokec6 \}\cf7 \strokec7 `\cf6 \strokec6 ];\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 if\cf4 \strokec4  \cf6 \strokec6 (!\cf4 \strokec4 stats \cf6 \strokec6 ||\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 count \cf6 \strokec6 ===\cf4 \strokec4  \cf9 \strokec9 0\cf6 \strokec6 )\cf4 \strokec4  \cf2 \strokec2 return\cf4 \strokec4  \cf2 \strokec2 null\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     \cb1 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  avgStats \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  \cb1 \
-\cb3       portes\cf6 \strokec6 :\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 portes \cf6 \strokec6 /\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 count\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3       presents\cf6 \strokec6 :\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 presents \cf6 \strokec6 /\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 count\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3       prospects\cf6 \strokec6 :\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 prospects \cf6 \strokec6 /\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 count\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3       closings\cf6 \strokec6 :\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 closings \cf6 \strokec6 /\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 count\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3       bc\cf6 \strokec6 :\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 bc \cf6 \strokec6 /\cf4 \strokec4  stats\cf6 \strokec6 .\cf4 \strokec4 count \cb1 \
-\cb3     \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  ratios \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  \cb1 \
-\cb3       rPoPres\cf6 \strokec6 :\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 presents \cf6 \strokec6 >\cf4 \strokec4  \cf9 \strokec9 0\cf4 \strokec4  \cf6 \strokec6 ?\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 portes \cf6 \strokec6 /\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 presents \cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 3\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3       rPresPros\cf6 \strokec6 :\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 prospects \cf6 \strokec6 >\cf4 \strokec4  \cf9 \strokec9 0\cf4 \strokec4  \cf6 \strokec6 ?\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 presents \cf6 \strokec6 /\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 prospects \cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 2\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3       rProsClo\cf6 \strokec6 :\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 closings \cf6 \strokec6 >\cf4 \strokec4  \cf9 \strokec9 0\cf4 \strokec4  \cf6 \strokec6 ?\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 prospects \cf6 \strokec6 /\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 closings \cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 2\cf6 \strokec6 ,\cf4 \strokec4  \cb1 \
-\cb3       rCloBC\cf6 \strokec6 :\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 bc \cf6 \strokec6 >\cf4 \strokec4  \cf9 \strokec9 0\cf4 \strokec4  \cf6 \strokec6 ?\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 closings \cf6 \strokec6 /\cf4 \strokec4  avgStats\cf6 \strokec6 .\cf4 \strokec4 bc \cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 2\cf4 \strokec4  \cb1 \
-\cb3     \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\cb3     \cb1 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  reqClosings \cf6 \strokec6 =\cf4 \strokec4  targetBC \cf6 \strokec6 *\cf4 \strokec4  ratios\cf6 \strokec6 .\cf4 \strokec4 rCloBC\cf6 \strokec6 ;\cf4 \strokec4  \cb1 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  reqProspects \cf6 \strokec6 =\cf4 \strokec4  reqClosings \cf6 \strokec6 *\cf4 \strokec4  ratios\cf6 \strokec6 .\cf4 \strokec4 rProsClo\cf6 \strokec6 ;\cf4 \strokec4  \cb1 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  reqPresents \cf6 \strokec6 =\cf4 \strokec4  reqProspects \cf6 \strokec6 *\cf4 \strokec4  ratios\cf6 \strokec6 .\cf4 \strokec4 rPresPros\cf6 \strokec6 ;\cf4 \strokec4  \cb1 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  reqPortes \cf6 \strokec6 =\cf4 \strokec4  reqPresents \cf6 \strokec6 *\cf4 \strokec4  ratios\cf6 \strokec6 .\cf4 \strokec4 rPoPres\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     \cb1 \
-\cb3     \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  avg\cf6 \strokec6 :\cf4 \strokec4  avgStats\cf6 \strokec6 ,\cf4 \strokec4  ratios\cf6 \strokec6 ,\cf4 \strokec4  roadmap\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  portes\cf6 \strokec6 :\cf4 \strokec4  \cf5 \strokec5 Math\cf6 \strokec6 .\cf4 \strokec4 ceil\cf6 \strokec6 (\cf4 \strokec4 reqPortes\cf6 \strokec6 ),\cf4 \strokec4  presents\cf6 \strokec6 :\cf4 \strokec4  \cf5 \strokec5 Math\cf6 \strokec6 .\cf4 \strokec4 ceil\cf6 \strokec6 (\cf4 \strokec4 reqPresents\cf6 \strokec6 ),\cf4 \strokec4  prospects\cf6 \strokec6 :\cf4 \strokec4  \cf5 \strokec5 Math\cf6 \strokec6 .\cf4 \strokec4 ceil\cf6 \strokec6 (\cf4 \strokec4 reqProspects\cf6 \strokec6 ),\cf4 \strokec4  closings\cf6 \strokec6 :\cf4 \strokec4  \cf5 \strokec5 Math\cf6 \strokec6 .\cf4 \strokec4 ceil\cf6 \strokec6 (\cf4 \strokec4 reqClosings\cf6 \strokec6 ),\cf4 \strokec4  bc\cf6 \strokec6 :\cf4 \strokec4  targetBC \cf6 \strokec6 \}\cf4 \strokec4  \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\cb3   \cf6 \strokec6 \},\cf4 \strokec4  \cf6 \strokec6 [\cf4 \strokec4 selectedCollab\cf6 \strokec6 ,\cf4 \strokec4  selectedWeek\cf6 \strokec6 ,\cf4 \strokec4  parsed\cf6 \strokec6 ]);\cf4 \cb1 \strokec4 \
-\
-\cb3   \cf2 \strokec2 const\cf4 \strokec4  exportPDF \cf6 \strokec6 =\cf4 \strokec4  \cf6 \strokec6 ()\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 if\cf4 \strokec4  \cf6 \strokec6 (!\cf4 \strokec4 window\cf6 \strokec6 .\cf4 \strokec4 html2pdf \cf6 \strokec6 ||\cf4 \strokec4  \cf6 \strokec6 !\cf4 \strokec4 currentStats\cf6 \strokec6 )\cf4 \strokec4  \cf2 \strokec2 return\cf6 \strokec6 ;\cf4 \cb1 \strokec4 \
-\cb3     setIsExporting\cf6 \strokec6 (\cf2 \strokec2 true\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3     \cf2 \strokec2 const\cf4 \strokec4  element \cf6 \strokec6 =\cf4 \strokec4  document\cf6 \strokec6 .\cf4 \strokec4 getElementById\cf6 \strokec6 (\cf7 \strokec7 'printable-roadmap'\cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\cb3     window\cf6 \strokec6 .\cf4 \strokec4 html2pdf\cf6 \strokec6 ().\cf2 \strokec2 from\cf6 \strokec6 (\cf4 \strokec4 element\cf6 \strokec6 ).\cf2 \strokec2 set\cf6 \strokec6 (\{\cf4 \cb1 \strokec4 \
-\cb3       margin\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 [\cf9 \strokec9 10\cf6 \strokec6 ,\cf4 \strokec4  \cf9 \strokec9 10\cf6 \strokec6 ],\cf4 \strokec4  filename\cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 `Roadmap_\cf6 \strokec6 $\{\cf4 \strokec4 selectedCollab\cf6 \strokec6 \}\cf7 \strokec7 _\cf6 \strokec6 $\{\cf4 \strokec4 selectedWeek\cf6 \strokec6 \}\cf7 \strokec7 .pdf`\cf6 \strokec6 ,\cf4 \cb1 \strokec4 \
-\cb3       image\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  \cf2 \strokec2 type\cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'jpeg'\cf6 \strokec6 ,\cf4 \strokec4  quality\cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 0.98\cf4 \strokec4  \cf6 \strokec6 \},\cf4 \cb1 \strokec4 \
-\cb3       html2canvas\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  scale\cf6 \strokec6 :\cf4 \strokec4  \cf9 \strokec9 2\cf6 \strokec6 ,\cf4 \strokec4  useCORS\cf6 \strokec6 :\cf4 \strokec4  \cf2 \strokec2 true\cf4 \strokec4  \cf6 \strokec6 \},\cf4 \cb1 \strokec4 \
-\cb3       jsPDF\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  unit\cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'mm'\cf6 \strokec6 ,\cf4 \strokec4  format\cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'a4'\cf6 \strokec6 ,\cf4 \strokec4  orientation\cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'portrait'\cf4 \strokec4  \cf6 \strokec6 \},\cf4 \cb1 \strokec4 \
-\cb3       pagebreak\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 \{\cf4 \strokec4  mode\cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 [\cf7 \strokec7 'css'\cf6 \strokec6 ,\cf4 \strokec4  \cf7 \strokec7 'legacy'\cf6 \strokec6 ]\cf4 \strokec4  \cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 \}).\cf4 \strokec4 save\cf6 \strokec6 ().\cf4 \strokec4 then\cf6 \strokec6 (()\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  setIsExporting\cf6 \strokec6 (\cf2 \strokec2 false\cf6 \strokec6 ));\cf4 \cb1 \strokec4 \
-\cb3   \cf6 \strokec6 \};\cf4 \cb1 \strokec4 \
-\
-\cb3   \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "min-h-screen bg-slate-50 p-6 font-sans text-slate-900 text-left relative text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "max-w-6xl mx-auto space-y-8 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 header className\cf6 \strokec6 =\cf7 \strokec7 "bg-indigo-950 p-8 rounded-[2.5rem] text-white shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full -mr-32 -mt-32 opacity-20 blur-3xl text-left"\cf4 \strokec4 ></div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "relative z-10 text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-center gap-3 mb-2 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "p-2 bg-indigo-500 rounded-xl shadow-lg text-left text-left"\cf4 \strokec4 ><\cf5 \strokec5 Zap\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 24\cf6 \strokec6 \}\cf4 \strokec4  /></div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex flex-col text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 <\cf4 \strokec4 h1 className\cf6 \strokec6 =\cf7 \strokec7 "text-2xl font-black uppercase tracking-tighter italic leading-none text-left"\cf6 \strokec6 >\cf5 \strokec5 Roadmap\cf4 \strokec4  suggestion\cf6 \strokec6 </\cf4 \strokec4 h1\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 <\cf4 \strokec4 span className\cf6 \strokec6 =\cf7 \strokec7 "text-[10px] font-bold text-indigo-300 opacity-50 mt-1 uppercase tracking-[0.2em] text-left"\cf6 \strokec6 >\cf4 \strokec4 v60\cf6 \strokec6 .\cf9 \strokec9 44\cf4 \strokec4  \cf5 \strokec5 Final\cf4 \strokec4  \cf5 \strokec5 Standalone\cf6 \strokec6 </\cf4 \strokec4 span\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "text-indigo-200 text-sm font-bold opacity-80 uppercase tracking-widest italic text-left"\cf6 \strokec6 >\cf5 \strokec5 Pilotage\cf4 \strokec4  pr\cf10 \strokec10 \'e9\cf4 \strokec4 dictif \cf6 \strokec6 :\cf4 \strokec4  \cf5 \strokec5 De\cf4 \strokec4  l\cf7 \strokec7 'objectif vers l'\cf4 \strokec4 effort\cf6 \strokec6 </\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex flex-col items-center gap-3 relative z-10 text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl text-center min-w-[180px] text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "text-[10px] font-black uppercase tracking-widest text-indigo-300 text-left"\cf6 \strokec6 >\cf5 \strokec5 Objectif\cf4 \strokec4  \cf5 \strokec5 Standard\cf6 \strokec6 </\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "text-4xl font-black text-white italic mt-1 text-left"\cf6 \strokec6 >\{\cf4 \strokec4 targetBC\cf6 \strokec6 \}\cf4 \strokec4  \cf5 \strokec5 BC\cf4 \strokec4  sign\cf10 \strokec10 \'e9\cf4 \strokec4 s\cf6 \strokec6 </\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 \{\cf4 \strokec4 currentStats \cf6 \strokec6 &&\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 button onClick\cf6 \strokec6 =\{\cf4 \strokec4 exportPDF\cf6 \strokec6 \}\cf4 \strokec4  disabled\cf6 \strokec6 =\{\cf4 \strokec4 isExporting\cf6 \strokec6 \}\cf4 \strokec4  className\cf6 \strokec6 =\cf7 \strokec7 "w-full py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50 text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 \{\cf4 \strokec4 isExporting \cf6 \strokec6 ?\cf4 \strokec4  \cf6 \strokec6 <\cf5 \strokec5 Loader2\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 14\cf6 \strokec6 \}\cf4 \strokec4  className\cf6 \strokec6 =\cf7 \strokec7 "animate-spin text-left"\cf4 \strokec4  /> \cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 <\cf5 \strokec5 FileDown\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 14\cf6 \strokec6 \}\cf4 \strokec4  className\cf6 \strokec6 =\cf7 \strokec7 "text-left"\cf4 \strokec4  />\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 \{\cf4 \strokec4 isExporting \cf6 \strokec6 ?\cf4 \strokec4  \cf7 \strokec7 "G\'e9n\'e9ration..."\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 "Exporter en PDF"\cf6 \strokec6 \}\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 </\cf4 \strokec4 button\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 )\}\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 </\cf4 \strokec4 header\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "grid grid-cols-1 lg:grid-cols-4 gap-8 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 section className\cf6 \strokec6 =\cf7 \strokec7 "lg:col-span-1 space-y-6 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\{\cf5 \strokec5 UI_CARD_STYLE\cf6 \strokec6 \}>\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-center gap-2 mb-4 text-indigo-900 font-black text-xs uppercase tracking-widest text-left text-left text-left"\cf4 \strokec4 ><\cf5 \strokec5 ClipboardPaste\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 16\cf6 \strokec6 \}\cf4 \strokec4  /> \cf9 \strokec9 1\cf6 \strokec6 .\cf4 \strokec4  \cf5 \strokec5 Charger\cf4 \strokec4  les donn\cf10 \strokec10 \'e9\cf4 \strokec4 es\cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 textarea className\cf6 \strokec6 =\cf7 \strokec7 "w-full h-40 p-3 bg-slate-50 border border-slate-200 rounded-xl text-[10px] font-mono focus:ring-2 focus:ring-indigo-500 outline-none resize-none shadow-inner text-left text-left"\cf4 \strokec4  placeholder\cf6 \strokec6 =\cf7 \strokec7 "Collez le tableau ici..."\cf4 \strokec4  value\cf6 \strokec6 =\{\cf4 \strokec4 rawData\cf6 \strokec6 \}\cf4 \strokec4  onChange\cf6 \strokec6 =\{(\cf4 \strokec4 e\cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 =>\cf4 \strokec4  setRawData\cf6 \strokec6 (\cf4 \strokec4 e\cf6 \strokec6 .\cf4 \strokec4 target\cf6 \strokec6 .\cf4 \strokec4 value\cf6 \strokec6 )\}\cf4 \strokec4 />\cb1 \
-\cb3             \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 \{\cf4 \strokec4 parsed\cf6 \strokec6 .\cf4 \strokec4 collabs\cf6 \strokec6 .\cf4 \strokec4 length \cf6 \strokec6 >\cf4 \strokec4  \cf9 \strokec9 0\cf4 \strokec4  \cf6 \strokec6 &&\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "space-y-4 animate-in slide-in-from-left duration-500 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-center justify-between px-2 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-center gap-2 text-indigo-900 font-black text-xs uppercase tracking-widest text-left text-left"\cf4 \strokec4 ><\cf5 \strokec5 Calculator\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 16\cf6 \strokec6 \}\cf4 \strokec4  /> \cf9 \strokec9 2\cf6 \strokec6 .\cf4 \strokec4  \cf5 \strokec5 Param\cf10 \strokec10 \'e9\cf4 \strokec4 trage\cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full flex items-center gap-1.5 border border-indigo-200 shadow-sm animate-pulse text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                         \cf6 \strokec6 <\cf5 \strokec5 Users2\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 10\cf6 \strokec6 \}\cf4 \strokec4  />\cb1 \
-\cb3                         \cf6 \strokec6 <\cf4 \strokec4 span className\cf6 \strokec6 =\cf7 \strokec7 "text-[10px] font-black text-left"\cf6 \strokec6 >\{\cf4 \strokec4 parsed\cf6 \strokec6 .\cf4 \strokec4 collabs\cf6 \strokec6 .\cf4 \strokec4 length\cf6 \strokec6 \}\cf4 \strokec4  collab\cf6 \strokec6 (\cf4 \strokec4 s\cf6 \strokec6 )</\cf4 \strokec4 span\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 <\cf5 \strokec5 Dropdown\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Collaborateur"\cf4 \strokec4  options\cf6 \strokec6 =\{\cf4 \strokec4 parsed\cf6 \strokec6 .\cf4 \strokec4 collabs\cf6 \strokec6 \}\cf4 \strokec4  value\cf6 \strokec6 =\{\cf4 \strokec4 selectedCollab\cf6 \strokec6 \}\cf4 \strokec4  onChange\cf6 \strokec6 =\{\cf4 \strokec4 setSelectedCollab\cf6 \strokec6 \}\cf4 \strokec4  icon\cf6 \strokec6 =\{\cf5 \strokec5 User\cf6 \strokec6 \}\cf4 \strokec4 />\cb1 \
-\cb3                 \cf6 \strokec6 <\cf5 \strokec5 Dropdown\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Semaine"\cf4 \strokec4  options\cf6 \strokec6 =\{\cf4 \strokec4 parsed\cf6 \strokec6 .\cf4 \strokec4 weeks\cf6 \strokec6 \}\cf4 \strokec4  value\cf6 \strokec6 =\{\cf4 \strokec4 selectedWeek\cf6 \strokec6 \}\cf4 \strokec4  onChange\cf6 \strokec6 =\{\cf4 \strokec4 setSelectedWeek\cf6 \strokec6 \}\cf4 \strokec4  icon\cf6 \strokec6 =\{\cf5 \strokec5 Calendar\cf6 \strokec6 \}\cf4 \strokec4 />\cb1 \
-\cb3               \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 )\}\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 </\cf4 \strokec4 section\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\
-\cb3           \cf6 \strokec6 <\cf4 \strokec4 section className\cf6 \strokec6 =\cf7 \strokec7 "lg:col-span-3 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 \{!\cf4 \strokec4 currentStats \cf6 \strokec6 ?\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "h-full min-h-[400px] border-2 border-dashed border-slate-200 rounded-[2.5rem] flex flex-col items-center justify-center text-slate-400 gap-4 text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 <\cf5 \strokec5 Info\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 48\cf6 \strokec6 \}\cf4 \strokec4  className\cf6 \strokec6 =\cf7 \strokec7 "opacity-20 text-left text-left"\cf4 \strokec4  />\cb1 \
-\cb3                 \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "font-bold text-center italic leading-relaxed text-left"\cf6 \strokec6 >\cf5 \strokec5 S\cf10 \strokec10 \'e9\cf4 \strokec4 lectionnez un collaborateur pour analyser \cf6 \strokec6 <\cf4 \strokec4 br/> la hi\cf10 \strokec10 \'e9\cf4 \strokec4 rarchie de sa performance\cf6 \strokec6 .</\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 )\cf4 \strokec4  \cf6 \strokec6 :\cf4 \strokec4  \cf6 \strokec6 (\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 <\cf4 \strokec4 div id\cf6 \strokec6 =\cf7 \strokec7 "printable-roadmap"\cf4 \strokec4  className\cf6 \strokec6 =\cf7 \strokec7 "space-y-0 text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "space-y-8 pb-8 print:pb-0 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                   \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl relative overflow-hidden text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "absolute top-0 right-0 p-8 text-indigo-50 opacity-10 text-left text-left"\cf4 \strokec4 ><\cf5 \strokec5 TrendingUp\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 120\cf6 \strokec6 \}\cf4 \strokec4  /></div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-center gap-3 mb-6 text-left text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                       \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "p-2 bg-indigo-600 text-white rounded-xl shadow-md text-left text-left"\cf4 \strokec4 ><\cf5 \strokec5 Target\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 24\cf6 \strokec6 \}\cf4 \strokec4  /></div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                       \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                           \cf6 \strokec6 <\cf4 \strokec4 h3 className\cf6 \strokec6 =\cf7 \strokec7 "text-xl font-black uppercase tracking-tighter text-[#0033a0] leading-none text-left"\cf6 \strokec6 >\{\cf4 \strokec4 selectedCollab\cf6 \strokec6 \}</\cf4 \strokec4 h3\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                           \cf6 \strokec6 <\cf4 \strokec4 p className\cf6 \strokec6 =\cf7 \strokec7 "text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 text-left"\cf6 \strokec6 >\cf5 \strokec5 Moyennes\cf4 \strokec4  hebdomadaires \cf6 \strokec6 (\{\cf4 \strokec4 selectedWeek\cf6 \strokec6 \})</\cf4 \strokec4 p\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                       \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "grid grid-cols-2 md:grid-cols-5 gap-4 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 StatMinimal\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Portes"\cf4 \strokec4  value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 portes\cf6 \strokec6 .\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 )\}\cf4 \strokec4  />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 StatMinimal\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Pr\'e9sents"\cf4 \strokec4  value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 presents\cf6 \strokec6 .\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 )\}\cf4 \strokec4  />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 StatMinimal\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Prospects"\cf4 \strokec4  value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 prospects\cf6 \strokec6 .\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 )\}\cf4 \strokec4  />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 StatMinimal\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Closings"\cf4 \strokec4  value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 closings\cf6 \strokec6 .\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 )\}\cf4 \strokec4  />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 StatMinimal\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "BC sign\'e9s"\cf4 \strokec4  value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 bc\cf6 \strokec6 .\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 )\}\cf4 \strokec4  highlight />\cb1 \
-\cb3                     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                   \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                   \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "space-y-4 text-left text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-center gap-2 px-2 text-indigo-900 font-black text-xs uppercase tracking-widest text-left text-left text-left"\cf4 \strokec4 ><\cf5 \strokec5 Zap\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 16\cf6 \strokec6 \}\cf4 \strokec4  className\cf6 \strokec6 =\cf7 \strokec7 "text-amber-500 text-left"\cf4 \strokec4  /> \cf5 \strokec5 Plan\cf4 \strokec4  d\cf7 \strokec7 'Effort Journalier : Objectif 12 BC sign\'e9s</div>\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 RoadmapStep\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Portes"\cf4 \strokec4  current\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 portes\cf6 \strokec6 \}\cf4 \strokec4  required\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 roadmap\cf6 \strokec6 .\cf4 \strokec4 portes\cf6 \strokec6 \}\cf4 \strokec4  icon\cf6 \strokec6 =\{\cf5 \strokec5 DoorOpen\cf6 \strokec6 \}\cf4 \strokec4  ratioLabel\cf6 \strokec6 =\cf7 \strokec7 "Ratio Porte/Pr\'e9sent"\cf4 \strokec4  ratioValue\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 ratios\cf6 \strokec6 .\cf4 \strokec4 rPoPres\cf6 \strokec6 \}\cf4 \strokec4  targetValue\cf6 \strokec6 =\{\cf9 \strokec9 3.00\cf6 \strokec6 \}\cf4 \strokec4  />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 RoadmapStep\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Pr\'e9sents"\cf4 \strokec4  current\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 presents\cf6 \strokec6 \}\cf4 \strokec4  required\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 roadmap\cf6 \strokec6 .\cf4 \strokec4 presents\cf6 \strokec6 \}\cf4 \strokec4  icon\cf6 \strokec6 =\{\cf5 \strokec5 Users\cf6 \strokec6 \}\cf4 \strokec4  ratioLabel\cf6 \strokec6 =\cf7 \strokec7 "Ratio Pr\'e9sent/Prospect"\cf4 \strokec4  ratioValue\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 ratios\cf6 \strokec6 .\cf4 \strokec4 rPresPros\cf6 \strokec6 \}\cf4 \strokec4  targetValue\cf6 \strokec6 =\{\cf9 \strokec9 2.00\cf6 \strokec6 \}\cf4 \strokec4  />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 RoadmapStep\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Prospects"\cf4 \strokec4  current\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 prospects\cf6 \strokec6 \}\cf4 \strokec4  required\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 roadmap\cf6 \strokec6 .\cf4 \strokec4 prospects\cf6 \strokec6 \}\cf4 \strokec4  icon\cf6 \strokec6 =\{\cf5 \strokec5 UserSearch\cf6 \strokec6 \}\cf4 \strokec4  ratioLabel\cf6 \strokec6 =\cf7 \strokec7 "Ratio Prospect/Closing"\cf4 \strokec4  ratioValue\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 ratios\cf6 \strokec6 .\cf4 \strokec4 rProsClo\cf6 \strokec6 \}\cf4 \strokec4  targetValue\cf6 \strokec6 =\{\cf9 \strokec9 2.00\cf6 \strokec6 \}\cf4 \strokec4  />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 RoadmapStep\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "Closings"\cf4 \strokec4  current\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 closings\cf6 \strokec6 \}\cf4 \strokec4  required\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 roadmap\cf6 \strokec6 .\cf4 \strokec4 closings\cf6 \strokec6 \}\cf4 \strokec4  icon\cf6 \strokec6 =\{\cf5 \strokec5 Handshake\cf6 \strokec6 \}\cf4 \strokec4  ratioLabel\cf6 \strokec6 =\cf7 \strokec7 "Ratio Closing/BC"\cf4 \strokec4  ratioValue\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 ratios\cf6 \strokec6 .\cf4 \strokec4 rCloBC\cf6 \strokec6 \}\cf4 \strokec4  targetValue\cf6 \strokec6 =\{\cf9 \strokec9 2.00\cf6 \strokec6 \}\cf4 \strokec4  />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 RoadmapStep\cf4 \strokec4  label\cf6 \strokec6 =\cf7 \strokec7 "BC sign\'e9s"\cf4 \strokec4  current\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 bc\cf6 \strokec6 \}\cf4 \strokec4  required\cf6 \strokec6 =\{\cf4 \strokec4 targetBC\cf6 \strokec6 \}\cf4 \strokec4  icon\cf6 \strokec6 =\{\cf5 \strokec5 FileCheck\cf6 \strokec6 \}\cf4 \strokec4  hideRatio\cf6 \strokec6 =\{\cf2 \strokec2 true\cf6 \strokec6 \}\cf4 \strokec4  />\cb1 \
-\cb3                     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                   \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 <\cf4 \strokec4 div style\cf6 \strokec6 =\{\{\cf4 \strokec4  pageBreakBefore\cf6 \strokec6 :\cf4 \strokec4  \cf7 \strokec7 'always'\cf4 \strokec4  \cf6 \strokec6 \}\}\cf4 \strokec4  className\cf6 \strokec6 =\cf7 \strokec7 "pt-8 print:pt-0 text-left text-left text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                   \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-xl text-left text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "flex items-center gap-3 mb-6 text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                       \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "p-2 bg-amber-100 text-amber-600 rounded-xl shadow-sm text-left text-left text-left"\cf4 \strokec4 ><\cf5 \strokec5 Lightbulb\cf4 \strokec4  size\cf6 \strokec6 =\{\cf9 \strokec9 24\cf6 \strokec6 \}\cf4 \strokec4  /></div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                       \cf6 \strokec6 <\cf4 \strokec4 h3 className\cf6 \strokec6 =\cf7 \strokec7 "text-lg font-black text-slate-900 tracking-tighter uppercase italic leading-none text-left text-left"\cf6 \strokec6 >\cf5 \strokec5 Diagnostic\cf4 \strokec4  approfondi des leviers de croissance\cf6 \strokec6 </\cf4 \strokec4 h3\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                     \cf6 \strokec6 <\cf4 \strokec4 div className\cf6 \strokec6 =\cf7 \strokec7 "grid grid-cols-1 gap-4 text-left text-left text-left text-left text-left"\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 LeverBlock\cf4 \strokec4  \cb1 \
-\cb3                         title\cf6 \strokec6 =\cf7 \strokec7 "Levier n\'b01 : BC sign\'e9s (Productivit\'e9)"\cf4 \strokec4  \cb1 \
-\cb3                         ratioName\cf6 \strokec6 =\cf7 \strokec7 "BC sign\'e9s / Jour"\cf4 \strokec4  \cb1 \
-\cb3                         value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 bc\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         target\cf6 \strokec6 =\{\cf9 \strokec9 12.0\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         isMax\cf6 \strokec6 =\{\cf2 \strokec2 false\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         hideRatioDetails\cf6 \strokec6 =\{\cf2 \strokec2 true\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         analysis\cf6 \strokec6 =\{\cf7 \strokec7 `La productivit\'e9 journali\'e8re est actuellement de \cf6 \strokec6 $\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 bc\cf6 \strokec6 .\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 )\}\cf7 \strokec7  BC sign\'e9s. Pour atteindre le seuil de 12, vous devez imp\'e9rativement augmenter votre production de \cf6 \strokec6 $\{(\cf4 \strokec4 targetBC \cf6 \strokec6 -\cf4 \strokec4  currentStats\cf6 \strokec6 .\cf4 \strokec4 avg\cf6 \strokec6 .\cf4 \strokec4 bc\cf6 \strokec6 ).\cf4 \strokec4 toFixed\cf6 \strokec6 (\cf9 \strokec9 1\cf6 \strokec6 )\}\cf7 \strokec7  unit\'e9s par jour. Pour y parvenir, il est n\'e9cessaire de revoir l'efficacit\'e9 sur les \'e9tapes pr\'e9c\'e9dentes du tunnel de vente et de maintenir une intensit\'e9 constante sur le terrain toute la journ\'e9e. Un rythme plus soutenu est essentiel.`\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                       />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 LeverBlock\cf4 \strokec4  \cb1 \
-\cb3                         title\cf6 \strokec6 =\cf7 \strokec7 "Levier n\'b02 : Closings (Signature)"\cf4 \strokec4  \cb1 \
-\cb3                         ratioName\cf6 \strokec6 =\cf7 \strokec7 "Ratio Closing / BC"\cf4 \strokec4  \cb1 \
-\cb3                         value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 ratios\cf6 \strokec6 .\cf4 \strokec4 rCloBC\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         target\cf6 \strokec6 =\{\cf9 \strokec9 2.0\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         analysis\cf6 \strokec6 =\{\cf7 \strokec7 `L'objectif est d'atteindre \cf6 \strokec6 $\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 roadmap\cf6 \strokec6 .\cf4 \strokec4 closings\cf6 \strokec6 \}\cf7 \strokec7  Closings. Un ratio sup\'e9rieur \'e0 2 r\'e9v\'e8le un d\'e9ficit critique de transformation administrative. Trop d'accords moraux s'\'e9vaporent avant la signature physique. Vous devez s\'e9curiser l'aspect contractuel d\'e8s la fin de l'entretien. Restez ferme dans votre posture de conseil jusqu'\'e0 la validation finale du contrat sans laisser de place au doute chez le client. C'est l'\'e9tape cl\'e9 du succ\'e8s.`\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                       />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 LeverBlock\cf4 \strokec4  \cb1 \
-\cb3                         title\cf6 \strokec6 =\cf7 \strokec7 "Levier n\'b03 : Prospects (Verrouillage)"\cf4 \strokec4  \cb1 \
-\cb3                         ratioName\cf6 \strokec6 =\cf7 \strokec7 "Ratio Prospect / Closing"\cf4 \strokec4  \cb1 \
-\cb3                         value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 ratios\cf6 \strokec6 .\cf4 \strokec4 rProsClo\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         target\cf6 \strokec6 =\{\cf9 \strokec9 2.0\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         analysis\cf6 \strokec6 =\{\cf7 \strokec7 `L'objectif est d'atteindre \cf6 \strokec6 $\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 roadmap\cf6 \strokec6 .\cf4 \strokec4 prospects\cf6 \strokec6 \}\cf7 \strokec7  Prospects. Un verrouillage fragile r\'e9v\'e8le une difficult\'e9 \'e0 transformer l'int\'e9r\'eat initial en d\'e9cision concr\'e8te. Travaillez la technique des 'petits oui' tout au long du parcours pour engager psychologiquement le client. Ne laissez pas les objections s'accumuler en fin de pr\'e9sentation, traitez-les imm\'e9diatement pour s\'e9curiser le volume n\'e9cessaire. Soyez percutant sur la valeur ajout\'e9e.`\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                       />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 LeverBlock\cf4 \strokec4  \cb1 \
-\cb3                         title\cf6 \strokec6 =\cf7 \strokec7 "Levier n\'b04 : Pr\'e9sents (D\'e9couverte)"\cf4 \strokec4  \cb1 \
-\cb3                         ratioName\cf6 \strokec6 =\cf7 \strokec7 "Ratio Pr\'e9sent / Prospect"\cf4 \strokec4  \cb1 \
-\cb3                         value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 ratios\cf6 \strokec6 .\cf4 \strokec4 rPresPros\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         target\cf6 \strokec6 =\{\cf9 \strokec9 2.0\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         analysis\cf6 \strokec6 =\{\cf7 \strokec7 `L'objectif est d'atteindre \cf6 \strokec6 $\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 roadmap\cf6 \strokec6 .\cf4 \strokec4 presents\cf6 \strokec6 \}\cf7 \strokec7  Pr\'e9sents. Si le ratio d\'e9passe 2, la phase de d\'e9couverte est trop superficielle, emp\'eachant de cr\'e9er une valeur per\'e7ue forte chez le client. Prenez le temps n\'e9cessaire pour identifier les besoins r\'e9els et les points de douleur du foyer afin de rendre votre offre incontestable. Une \'e9coute plus active augmentera m\'e9caniquement votre taux de transformation et r\'e9duira l'effort physique fourni quotidien.`\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                       />\cb1 \
-\cb3                       \cf6 \strokec6 <\cf5 \strokec5 LeverBlock\cf4 \strokec4  \cb1 \
-\cb3                         title\cf6 \strokec6 =\cf7 \strokec7 "Levier n\'b05 : Portes (Accroche)"\cf4 \strokec4  \cb1 \
-\cb3                         ratioName\cf6 \strokec6 =\cf7 \strokec7 "Ratio Porte / Pr\'e9sent"\cf4 \strokec4  \cb1 \
-\cb3                         value\cf6 \strokec6 =\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 ratios\cf6 \strokec6 .\cf4 \strokec4 rPoPres\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         target\cf6 \strokec6 =\{\cf9 \strokec9 3.0\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                         analysis\cf6 \strokec6 =\{\cf7 \strokec7 `L'objectif est d'atteindre \cf6 \strokec6 $\{\cf4 \strokec4 currentStats\cf6 \strokec6 .\cf4 \strokec4 roadmap\cf6 \strokec6 .\cf4 \strokec4 portes\cf6 \strokec6 \}\cf7 \strokec7  Portes. Votre ratio \'e9lev\'e9 r\'e9v\'e8le un fort taux d'absence lors de vos passages. Pour optimiser votre \'e9nergie, ciblez les moments o\'f9 les foyers sont pr\'e9sents : privil\'e9giez les fins de journ\'e9es d\'e8s 17h00, le mercredi ou le samedi matin. Une meilleure lecture de vos secteurs r\'e9duira l'effort physique inutile tout en garantissant le volume de pr\'e9sentations n\'e9cessaires pour atteindre vos 12 BC sign\'e9s quotidien.`\cf6 \strokec6 \}\cf4 \strokec4  \cb1 \
-\cb3                       />\cb1 \
-\cb3                     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                   \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3                 \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3               \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3             \cf6 \strokec6 )\}\cf4 \cb1 \strokec4 \
-\cb3           \cf6 \strokec6 </\cf4 \strokec4 section\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3         \cf6 \strokec6 <\cf4 \strokec4 footer className\cf6 \strokec6 =\cf7 \strokec7 "text-center py-8 text-[10px] text-slate-400 font-black uppercase tracking-[0.4em] opacity-40 italic text-center"\cf6 \strokec6 >\cf5 \strokec5 Suggestion\cf4 \strokec4  \cf5 \strokec5 Engine\cf4 \strokec4  \cf10 \strokec10 \'95\cf4 \strokec4  \cf5 \strokec5 EMconsulting\cf4 \strokec4  \cf5 \strokec5 Data\cf4 \strokec4  \cf5 \strokec5 Analytics\cf4 \strokec4  \cf10 \strokec10 \'95\cf4 \strokec4  v60\cf6 \strokec6 .\cf9 \strokec9 44\cf4 \strokec4  \cf5 \strokec5 Final\cf4 \strokec4  \cf5 \strokec5 Standalone\cf6 \strokec6 </\cf4 \strokec4 footer\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3       \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3     \cf6 \strokec6 </\cf4 \strokec4 div\cf6 \strokec6 >\cf4 \cb1 \strokec4 \
-\cb3   \cf6 \strokec6 );\cf4 \cb1 \strokec4 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 \}\cf4 \cb1 \strokec4 \
+// --- CONFIGURATION ET CONSTANTES ---
+const UI_CARD_STYLE = "bg-white rounded-3xl p-6 shadow-sm border border-blue-50 transition-all hover:shadow-lg text-left";
+
+const Dropdown = ({ label, options, value, onChange, icon: Icon }) => (
+  <div className="flex-1 min-w-[200px] text-left">
+    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+      {Icon && <Icon size={12} />} {label}
+    </label>
+    <div className="relative text-left">
+      <select 
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full appearance-none bg-white border border-slate-200 rounded-xl px-4 py-3 pr-10 font-bold text-slate-700 shadow-sm focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer transition-all hover:border-indigo-300 text-sm"
+      >
+        <option value="">Sélectionner...</option>
+        {options.map(opt => (
+          <option key={String(opt)} value={String(opt)}>
+            {String(opt)}
+          </option>
+        ))}
+      </select>
+      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
+    </div>
+  </div>
+);
+
+const RoadmapStep = ({ label, current, required, icon: Icon, ratioLabel, ratioValue, targetValue, isMax = true, hideRatio = false }) => {
+  const isMet = parseFloat(current) >= parseFloat(required);
+  const progress = Math.min((parseFloat(current) / parseFloat(required)) * 100, 100);
+  const isRatioTargetMet = isMax ? ratioValue <= targetValue : ratioValue >= targetValue;
+  const ratioColorClass = isRatioTargetMet ? 'text-emerald-600 bg-emerald-50 border-emerald-100' : 'text-rose-600 bg-rose-50 border-rose-100';
+
+  return (
+    <div className="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-md relative overflow-hidden flex flex-col h-full text-left transition-all hover:shadow-lg">
+      <div className="flex items-start justify-between mb-3 text-left">
+        <div className={`p-2.5 rounded-xl ${isMet ? 'bg-emerald-50 text-emerald-600' : 'bg-indigo-50 text-indigo-600'}`}>
+          {Icon && <Icon size={22} />}
+        </div>
+        <div className="text-right flex flex-col items-end">
+          <p className="text-[9px] font-bold text-slate-400 leading-tight mb-1 max-w-[140px] text-right">
+            "{label}" à réaliser pour arriver à l'objectif :
+          </p>
+          <p className="text-2xl font-black text-slate-900 leading-none">{required}</p>
+        </div>
+      </div>
+      <div className="flex-1 space-y-3 mb-4 text-left">
+        <div className="flex items-center gap-2 text-[10px]">
+          <span className="font-bold text-slate-400 italic">Actuel: {current.toFixed(1)}</span>
+          {!isMet && <ArrowRight size={10} className="text-slate-300" />}
+          <span className={`font-black ${isMet ? 'text-emerald-600' : 'text-amber-600'}`}>
+            {isMet ? 'Cible atteinte' : `Besoin: +${(required - current).toFixed(1)}`}
+          </span>
+        </div>
+        {!hideRatio && (
+          <div className={`px-3 py-2 rounded-xl border transition-colors ${ratioColorClass}`}>
+            <div className="flex justify-between items-center mb-0.5">
+              <p className="text-[8px] font-black uppercase tracking-widest opacity-70">{ratioLabel}</p>
+              <p className="text-[8px] font-bold uppercase whitespace-nowrap ml-2 text-right">Cible: {isMax ? '≤' : '≥'} {targetValue}</p>
+            </div>
+            <p className="text-sm font-black flex items-center gap-1.5 text-left">
+              {ratioValue.toFixed(2)}
+              {isRatioTargetMet ? <CheckCircle2 size={12} /> : <AlertCircle size={12} />}
+            </p>
+          </div>
+        )}
+      </div>
+      <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden text-left">
+        <div 
+          className={`h-full transition-all duration-1000 ${isMet ? 'bg-emerald-500' : 'bg-indigo-600'}`}
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+    </div>
+  );
+};
+
+const LeverBlock = ({ title, ratioName, value, target, isMax = true, analysis, hideRatioDetails = false }) => {
+  const isMet = isMax ? value <= target : value >= target;
+  const colorClass = isMet ? 'emerald' : 'rose';
+  return (
+    <div className={`p-4 bg-${colorClass}-50/30 rounded-3xl border border-${colorClass}-100 flex items-start gap-3 transition-all hover:bg-white hover:border-${colorClass}-300 text-left`}>
+      <div className={`shrink-0 p-2 bg-white rounded-xl shadow-sm text-${colorClass}-500 text-left`}>
+        {isMet ? <CheckCircle2 size={18}/> : <AlertCircle size={18}/>}
+      </div>
+      <div className="text-left flex-1 text-left">
+        <div className="flex items-center justify-between mb-1 text-left">
+          <p className={`text-[10px] font-black uppercase tracking-widest text-${colorClass}-600 text-left`}>{title}</p>
+          {!hideRatioDetails && (
+            <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full bg-${colorClass}-100 text-${colorClass}-700 text-right`}>
+              {ratioName} : {value.toFixed(2)} (Cible {isMax ? '≤' : '≥'} {target})
+            </span>
+          )}
+        </div>
+        <div className="text-[11px] font-bold text-slate-700 leading-snug italic whitespace-pre-wrap text-left">
+          {analysis}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const StatMinimal = ({ label, value, highlight }) => (
+  <div className={`p-4 rounded-2xl border ${highlight ? 'bg-indigo-600 border-indigo-700 shadow-md text-left' : 'bg-slate-50 border-slate-100 text-left'}`}>
+    <p className={`text-[8px] font-black uppercase tracking-widest mb-1 ${highlight ? 'text-indigo-200 text-left' : 'text-slate-400 text-left'}`}>{label}</p>
+    <p className={`text-lg font-black ${highlight ? 'text-white italic text-left' : 'text-slate-700 text-left'}`}>{value}</p>
+  </div>
+);
+
+// --- LOGIQUE DE PARSING ---
+
+const parsePastedData = (text) => {
+  if (!text || text.trim().length < 10) return { collabs: [], weeks: [], data: {} };
+  const lines = text.split('\n').filter(l => l.trim() !== '');
+  if (lines.length < 2) return { collabs: [], weeks: [], data: {} };
+  const headers = lines[0].split(/[|\t]/).map(h => h.trim().toLowerCase());
+  const findIdx = (keys) => headers.findIndex(h => keys.some(k => h.includes(k)));
+  const idx = { name: findIdx(["nom"]), week: findIdx(["semaine"]), portes: findIdx(["portes"]), presents: findIdx(["présents", "presents"]), prospects: findIdx(["prospects"]), closings: findIdx(["closings"]), bc: findIdx(["bc"]) };
+  
+  if (idx.name === -1) return { collabs: [], weeks: [], data: {} };
+  
+  const db = {}; const allCollabs = new Set(); const allWeeks = new Set();
+  lines.slice(1).forEach(line => {
+    const p = line.split(/[|\t]/).map(v => v.trim());
+    if (!p[idx.name]) return;
+    const name = String(p[idx.name]);
+    const weekValue = p[idx.week] ? p[idx.week].replace(/[^0-9]/g, '') : "1";
+    const weekLabel = `Semaine ${weekValue}`;
+    allCollabs.add(name); allWeeks.add(weekLabel);
+    const key = `${name}_${weekLabel}`;
+    if (!db[key]) db[key] = { count: 0, portes: 0, presents: 0, prospects: 0, closings: 0, bc: 0 };
+    db[key].count += 1;
+    db[key].portes += parseInt(p[idx.portes]) || 0;
+    db[key].presents += parseInt(p[idx.presents]) || 0;
+    db[key].prospects += parseInt(p[idx.prospects]) || 0;
+    db[key].closings += parseInt(p[idx.closings]) || 0;
+    db[key].bc += parseInt(p[idx.bc]) || 0;
+  });
+  return { collabs: Array.from(allCollabs).sort(), weeks: Array.from(allWeeks).sort((a,b) => (parseInt(a.replace(/\D/g,'')) || 0) - (parseInt(b.replace(/\D/g,'')) || 0)), data: db };
+};
+
+export default function App() {
+  const [rawData, setRawData] = useState('');
+  const [selectedCollab, setSelectedCollab] = useState('');
+  const [selectedWeek, setSelectedWeek] = useState('');
+  const [isExporting, setIsExporting] = useState(false);
+  const targetBC = 12;
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+  const parsed = useMemo(() => parsePastedData(rawData), [rawData]);
+
+  const currentStats = useMemo(() => {
+    if (!selectedCollab || !selectedWeek) return null;
+    const stats = parsed.data[`${selectedCollab}_${selectedWeek}`];
+    if (!stats || stats.count === 0) return null;
+    
+    const avgStats = { 
+      portes: stats.portes / stats.count, 
+      presents: stats.presents / stats.count, 
+      prospects: stats.prospects / stats.count, 
+      closings: stats.closings / stats.count, 
+      bc: stats.bc / stats.count 
+    };
+
+    const ratios = { 
+      rPoPres: avgStats.presents > 0 ? avgStats.portes / avgStats.presents : 3, 
+      rPresPros: avgStats.prospects > 0 ? avgStats.presents / avgStats.prospects : 2, 
+      rProsClo: avgStats.closings > 0 ? avgStats.prospects / avgStats.closings : 2, 
+      rCloBC: avgStats.bc > 0 ? avgStats.closings / avgStats.bc : 2 
+    };
+    
+    const reqClosings = targetBC * ratios.rCloBC; 
+    const reqProspects = reqClosings * ratios.rProsClo; 
+    const reqPresents = reqProspects * ratios.rPresPros; 
+    const reqPortes = reqPresents * ratios.rPoPres;
+    
+    return { avg: avgStats, ratios, roadmap: { portes: Math.ceil(reqPortes), presents: Math.ceil(reqPresents), prospects: Math.ceil(reqProspects), closings: Math.ceil(reqClosings), bc: targetBC } };
+  }, [selectedCollab, selectedWeek, parsed]);
+
+  const exportPDF = () => {
+    if (!window.html2pdf || !currentStats) return;
+    setIsExporting(true);
+    const element = document.getElementById('printable-roadmap');
+    window.html2pdf().from(element).set({
+      margin: [10, 10], filename: `Roadmap_${selectedCollab}_${selectedWeek}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'] }
+    }).save().then(() => setIsExporting(false));
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 p-6 font-sans text-slate-900 text-left relative text-left">
+      <div className="max-w-6xl mx-auto space-y-8 text-left">
+        <header className="bg-indigo-950 p-8 rounded-[2.5rem] text-white shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden text-left">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full -mr-32 -mt-32 opacity-20 blur-3xl text-left text-left"></div>
+          <div className="relative z-10 text-left text-left text-left">
+            <div className="flex items-center gap-3 mb-2 text-left">
+              <div className="p-2 bg-indigo-500 rounded-xl shadow-lg text-left text-left text-left"><Zap size={24} /></div>
+              <div className="flex flex-col text-left">
+                <h1 className="text-2xl font-black uppercase tracking-tighter italic leading-none text-left">Roadmap suggestion</h1>
+                <span className="text-[10px] font-bold text-indigo-300 opacity-50 mt-1 uppercase tracking-[0.2em] text-left">v60.44 Final Standalone</span>
+              </div>
+            </div>
+            <p className="text-indigo-200 text-sm font-bold opacity-80 uppercase tracking-widest italic text-left">Pilotage prédictif : De l'objectif vers l'effort</p>
+          </div>
+          <div className="flex flex-col items-center gap-3 relative z-10 text-left text-left">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl text-center min-w-[180px] text-left">
+              <p className="text-[10px] font-black uppercase tracking-widest text-indigo-300 text-left text-left text-left">Objectif Standard</p>
+              <p className="text-4xl font-black text-white italic mt-1 text-left text-left">{targetBC} BC signés</p>
+            </div>
+            {currentStats && (
+              <button onClick={exportPDF} disabled={isExporting} className="w-full py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-50 text-left text-left">
+                {isExporting ? <Loader2 size={14} className="animate-spin text-left text-left" /> : <FileDown size={14} className="text-left text-left text-left" />}
+                {isExporting ? "Génération..." : "Exporter en PDF"}
+              </button>
+            )}
+          </div>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 text-left text-left">
+          <section className="lg:col-span-1 space-y-6 text-left">
+            <div className={UI_CARD_STYLE}>
+              <div className="flex items-center gap-2 mb-4 text-indigo-900 font-black text-xs uppercase tracking-widest text-left text-left text-left text-left"><ClipboardPaste size={16} /> 1. Charger les données</div>
+              <textarea className="w-full h-40 p-3 bg-slate-50 border border-slate-200 rounded-xl text-[10px] font-mono focus:ring-2 focus:ring-indigo-500 outline-none resize-none shadow-inner text-left text-left text-left" placeholder="Collez le tableau ici..." value={rawData} onChange={(e) => setRawData(e.target.value)}/>
+            </div>
+            {parsed.collabs.length > 0 && (
+              <div className="space-y-4 animate-in slide-in-from-left duration-500 text-left text-left text-left">
+                <div className="flex items-center justify-between px-2 text-left">
+                    <div className="flex items-center gap-2 text-indigo-900 font-black text-xs uppercase tracking-widest text-left text-left text-left"><Calculator size={16} /> 2. Paramétrage</div>
+                    <div className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full flex items-center gap-1.5 border border-indigo-200 shadow-sm animate-pulse text-left text-left text-left">
+                        <Users2 size={10} />
+                        <span className="text-[10px] font-black text-left">{parsed.collabs.length} collab(s)</span>
+                    </div>
+                </div>
+                <Dropdown label="Collaborateur" options={parsed.collabs} value={selectedCollab} onChange={setSelectedCollab} icon={User}/>
+                <Dropdown label="Semaine" options={parsed.weeks} value={selectedWeek} onChange={setSelectedWeek} icon={Calendar}/>
+              </div>
+            )}
+          </section>
+
+          <section className="lg:col-span-3 text-left">
+            {!currentStats ? (
+              <div className="h-full min-h-[400px] border-2 border-dashed border-slate-200 rounded-[2.5rem] flex flex-col items-center justify-center text-slate-400 gap-4 text-left text-left text-left">
+                <Info size={48} className="opacity-20 text-left text-left" />
+                <p className="font-bold text-center italic leading-relaxed text-left text-left text-left">Sélectionnez un collaborateur pour analyser <br/> la hiérarchie de sa performance.</p>
+              </div>
+            ) : (
+              <div id="printable-roadmap" className="space-y-0 text-left text-left text-left">
+                <div className="space-y-8 pb-8 print:pb-0 text-left text-left text-left">
+                  <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl relative overflow-hidden text-left text-left text-left">
+                    <div className="absolute top-0 right-0 p-8 text-indigo-50 opacity-10 text-left text-left text-left"><TrendingUp size={120} /></div>
+                    <div className="flex items-center gap-3 mb-6 text-left text-left text-left text-left">
+                      <div className="p-2 bg-indigo-600 text-white rounded-xl shadow-md text-left text-left text-left"><Target size={24} /></div>
+                      <div className="text-left text-left text-left">
+                          <h3 className="text-xl font-black uppercase tracking-tighter text-[#0033a0] leading-none text-left text-left text-left text-left">{selectedCollab}</h3>
+                          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 text-left text-left text-left">Moyennes hebdomadaires ({selectedWeek})</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-left text-left text-left text-left text-left">
+                      <StatMinimal label="Portes" value={currentStats.avg.portes.toFixed(1)} />
+                      <StatMinimal label="Présents" value={currentStats.avg.presents.toFixed(1)} />
+                      <StatMinimal label="Prospects" value={currentStats.avg.prospects.toFixed(1)} />
+                      <StatMinimal label="Closings" value={currentStats.avg.closings.toFixed(1)} />
+                      <StatMinimal label="BC signés" value={currentStats.avg.bc.toFixed(1)} highlight />
+                    </div>
+                  </div>
+                  <div className="space-y-4 text-left text-left text-left">
+                    <div className="flex items-center gap-2 px-2 text-indigo-900 font-black text-xs uppercase tracking-widest text-left text-left text-left text-left text-left"><Zap size={16} className="text-amber-500 text-left text-left text-left" /> Plan d'Effort Journalier : Objectif 12 BC signés</div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 text-left text-left text-left">
+                      <RoadmapStep label="Portes" current={currentStats.avg.portes} required={currentStats.roadmap.portes} icon={DoorOpen} ratioLabel="Ratio Porte/Présent" ratioValue={currentStats.ratios.rPoPres} targetValue={3.00} />
+                      <RoadmapStep label="Présents" current={currentStats.avg.presents} required={currentStats.roadmap.presents} icon={Users} ratioLabel="Ratio Présent/Prospect" ratioValue={currentStats.ratios.rPresPros} targetValue={2.00} />
+                      <RoadmapStep label="Prospects" current={currentStats.avg.prospects} required={currentStats.roadmap.prospects} icon={UserSearch} ratioLabel="Ratio Prospect/Closing" ratioValue={currentStats.ratios.rProsClo} targetValue={2.00} />
+                      <RoadmapStep label="Closings" current={currentStats.avg.closings} required={currentStats.roadmap.closings} icon={Handshake} ratioLabel="Ratio Closing/BC" ratioValue={currentStats.ratios.rCloBC} targetValue={2.00} />
+                      <RoadmapStep label="BC signés" current={currentStats.avg.bc} required={targetBC} icon={FileCheck} hideRatio={true} />
+                    </div>
+                  </div>
+                </div>
+                <div style={{ pageBreakBefore: 'always' }} className="pt-8 print:pt-0 text-left text-left text-left text-left">
+                  <div className="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-xl text-left text-left text-left text-left">
+                    <div className="flex items-center gap-3 mb-6 text-left">
+                      <div className="p-2 bg-amber-100 text-amber-600 rounded-xl shadow-sm text-left text-left text-left text-left"><Lightbulb size={24} /></div>
+                      <h3 className="text-lg font-black text-slate-900 tracking-tighter uppercase italic leading-none text-left text-left text-left text-left">Diagnostic approfondi des leviers de croissance</h3>
+                    </div>
+                    <div className="grid grid-cols-1 gap-4 text-left text-left text-left text-left text-left">
+                      <LeverBlock 
+                        title="Levier n°1 : BC signés (Productivité)" 
+                        ratioName="BC signés / Jour" 
+                        value={currentStats.avg.bc} 
+                        target={12.0} 
+                        isMax={false} 
+                        hideRatioDetails={true} 
+                        analysis={`La productivité journalière est actuellement de ${currentStats.avg.bc.toFixed(1)} BC signés. Pour atteindre le seuil de 12, vous devez impérativement augmenter votre production de ${(targetBC - currentStats.avg.bc).toFixed(1)} unités par jour. Pour y parvenir, il est nécessaire de revoir l'efficacité sur les étapes précédentes du tunnel de vente et de maintenir une intensité constante sur le terrain toute la journée. Un rythme plus soutenu est essentiel.`} 
+                      />
+                      <LeverBlock 
+                        title="Levier n°2 : Closings (Signature)" 
+                        ratioName="Ratio Closing / BC" 
+                        value={currentStats.ratios.rCloBC} 
+                        target={2.0} 
+                        analysis={`L'objectif est d'atteindre ${currentStats.roadmap.closings} Closings. Un ratio supérieur à 2 révèle un déficit critique de transformation administrative. Trop d'accords moraux s'évaporent avant la signature physique. Vous devez sécuriser l'aspect contractuel dès la fin de l'entretien. Restez ferme dans votre posture de conseil jusqu'à la validation finale du contrat sans laisser de place au doute chez le client. C'est l'étape clé du succès.`} 
+                      />
+                      <LeverBlock 
+                        title="Levier n°3 : Prospects (Verrouillage)" 
+                        ratioName="Ratio Prospect / Closing" 
+                        value={currentStats.ratios.rProsClo} 
+                        target={2.0} 
+                        analysis={`L'objectif est d'atteindre ${currentStats.roadmap.prospects} Prospects. Un verrouillage fragile révèle une difficulté à transformer l'intérêt initial en décision concrète. Travaillez la technique des 'petits oui' tout au long du parcours pour engager psychologiquement le client. Ne laissez pas les objections s'accumuler en fin de présentation, traitez-les immédiatement pour sécuriser le volume nécessaire. Soyez percutant sur la valeur ajoutée.`} 
+                      />
+                      <LeverBlock 
+                        title="Levier n°4 : Présents (Découverte)" 
+                        ratioName="Ratio Présent / Prospect" 
+                        value={currentStats.ratios.rPresPros} 
+                        target={2.0} 
+                        analysis={`L'objectif est d'atteindre ${currentStats.roadmap.presents} Présents. Si le ratio dépasse 2, la phase de découverte est trop superficielle, empêchant de créer une valeur perçue forte chez le client. Prenez le temps nécessaire pour identifier les besoins réels et les points de douleur du foyer afin de rendre votre offre incontestable. Une écoute plus active augmentera mécaniquement votre taux de transformation et réduira l'effort physique fourni quotidien.`} 
+                      />
+                      <LeverBlock 
+                        title="Levier n°5 : Portes (Accroche)" 
+                        ratioName="Ratio Porte / Présent" 
+                        value={currentStats.ratios.rPoPres} 
+                        target={3.0} 
+                        analysis={`L'objectif est d'atteindre ${currentStats.roadmap.portes} Portes. Votre ratio élevé révèle un fort taux d'absence lors de vos passages. Pour optimiser votre énergie, ciblez les moments où les foyers sont présents : privilégiez les fins de journées dès 17h00, le mercredi ou le samedi matin. Une meilleure lecture de vos secteurs réduira l'effort physique inutile tout en garantissant le volume de présentations nécessaires pour atteindre vos 12 BC signés quotidien.`} 
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </section>
+        </div>
+        <footer className="text-center py-8 text-[10px] text-slate-400 font-black uppercase tracking-[0.4em] opacity-40 italic text-center">Suggestion Engine • EMconsulting Data Analytics • v60.44 Final Standalone</footer>
+      </div>
+    </div>
+  );
 }
